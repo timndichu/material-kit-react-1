@@ -11,6 +11,11 @@ import Register from './pages/Register';
 import Products from './pages/Products';
 import DashboardApp from './pages/DashboardApp';
 
+import Temperature from './pages/Temperature';
+import Gyroscope from './pages/Gyroscope';
+import Accelerometer from './pages/Accelerometer';
+
+
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -23,6 +28,9 @@ export default function Router() {
         { path: 'user', element: <User /> },
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
+        { path: 'temperature', element: <Temperature /> },
+        { path: 'accelerometer', element: <Accelerometer /> },
+        { path: 'gyroscope', element: <Gyroscope /> },
       ],
     },
     {

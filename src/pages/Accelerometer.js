@@ -1,4 +1,6 @@
+
 // @mui
+
 import { Grid, Container, Typography, Card, CardHeader, Box } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
@@ -16,11 +18,10 @@ import {
 
 // ----------------------------------------------------------------------
 
-export default function DashboardApp() {
- 
+export default function Accelerometer() {
+  
+
   const [bids, setBids] = useState(['Waiting for connection...']);
-  const [tempValues, setTempValues] = useState([0]);
-  const [gyroValues, setGyroValues] = useState([0]);
   const [accelerometerValues, setAccelerometerValues] = useState([0]);
   const currentDate1 = new Date();
   const showDate1 = moment(currentDate1).format('HH:mm:ss');
@@ -37,17 +38,10 @@ export default function DashboardApp() {
       if(json!=="Hello Server") {
         arr = json.split(',')
       }
-      if(arr[0]==="T") {
-        setTempValues((prevTemps)=> 
-        prevTemps.concat(arr[1]))
-      }
-      else if(arr[0]==="G") {
-        setGyroValues((prevGyro)=> 
-        prevGyro.concat(arr[1]))
-      }
-      else if(arr[0]==="A") {
+     
+     if(arr[0]==="A") {
         setAccelerometerValues((prevAcc)=> 
-        prevAcc.concat(arr[1]))
+        prevAcc.concat(arr[1],arr[2],arr[3]))
       }
       console.log(arr)
       setBids((prevBids)=> 
@@ -71,25 +65,29 @@ export default function DashboardApp() {
               subheader="(+10°C) hotter than last year"
               date={date}
               chartData={[
+               
                 {
-                  name: 'Temperature',
-                  type: 'column',
-                  fill: 'solid',
-                  data: tempValues,
+                  name: 'Accelerometer',
+                  type: 'area',
+                  fill: 'gradient',
+                  data: accelerometerValues[0],
+      
                 },
                 {
                   name: 'Accelerometer',
                   type: 'area',
                   fill: 'gradient',
-                  data: accelerometerValues,
+                  data: accelerometerValues[1],
       
                 },
                 {
-                  name: 'Gyroscope',
-                  type: 'line',
-                  fill: 'solid',
-                  data: gyroValues,
+                  name: 'Accelerometer',
+                  type: 'area',
+                  fill: 'gradient',
+                  data: accelerometerValues[2],
+      
                 },
+               
               ]}
             />
           </Grid>

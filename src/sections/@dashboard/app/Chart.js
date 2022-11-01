@@ -8,7 +8,7 @@ import { BaseOptionChart } from '../../../components/chart';
 
 // ----------------------------------------------------------------------
 
-AppWebsiteVisits.propTypes = {
+Chart.propTypes = {
   title: PropTypes.string,
   date: PropTypes.string,
   subheader: PropTypes.string,
@@ -16,7 +16,7 @@ AppWebsiteVisits.propTypes = {
   // chartLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default function AppWebsiteVisits({ title, subheader, date, chartData, ...other }) {
+export default function Chart({ title, subheader, date, chartData, ...other }) {
   const chartOptions = merge(BaseOptionChart(), {
     plotOptions: { bar: { columnWidth: '16%' } },
     fill: { type: chartData.map((i) => i.fill) },

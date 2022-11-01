@@ -18,18 +18,18 @@ const navConfig = [
   },
   {
     title: 'temperature',
-    path: '/dashboard/products',
+    path: '/dashboard/temperature',
     icon: getIcon('eva:file-text-fill'),
   },
   {
     title: 'accelerometer',
-    path: '/dashboard/products',
+    path: '/dashboard/accelerometer',
     icon: getIcon('eva:file-text-fill'),
   },
 
   {
     title: 'gyroscope',
-    path: '/login',
+    path: '/gyroscope',
     icon: getIcon('eva:file-text-fill'),
   },
   {

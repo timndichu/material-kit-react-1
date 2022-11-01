@@ -1,4 +1,4 @@
-// @mui
+
 import { Grid, Container, Typography, Card, CardHeader, Box } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
@@ -16,12 +16,12 @@ import {
 
 // ----------------------------------------------------------------------
 
-export default function DashboardApp() {
- 
+export default function Gyroscope() {
+
+
   const [bids, setBids] = useState(['Waiting for connection...']);
-  const [tempValues, setTempValues] = useState([0]);
+ 
   const [gyroValues, setGyroValues] = useState([0]);
-  const [accelerometerValues, setAccelerometerValues] = useState([0]);
   const currentDate1 = new Date();
   const showDate1 = moment(currentDate1).format('HH:mm:ss');
   const [date, setDate] = useState(showDate1.toString());
@@ -37,18 +37,12 @@ export default function DashboardApp() {
       if(json!=="Hello Server") {
         arr = json.split(',')
       }
-      if(arr[0]==="T") {
-        setTempValues((prevTemps)=> 
-        prevTemps.concat(arr[1]))
-      }
-      else if(arr[0]==="G") {
+     
+     if(arr[0]==="G") {
         setGyroValues((prevGyro)=> 
-        prevGyro.concat(arr[1]))
+        prevGyro.concat(arr[1], arr[2], arr[3]))
       }
-      else if(arr[0]==="A") {
-        setAccelerometerValues((prevAcc)=> 
-        prevAcc.concat(arr[1]))
-      }
+     
       console.log(arr)
       setBids((prevBids)=> 
         prevBids.concat(<br/>, json))
@@ -72,23 +66,22 @@ export default function DashboardApp() {
               date={date}
               chartData={[
                 {
-                  name: 'Temperature',
+                  name: 'Gyro X',
                   type: 'column',
                   fill: 'solid',
-                  data: tempValues,
+                  data: gyroValues[0],
                 },
                 {
-                  name: 'Accelerometer',
-                  type: 'area',
-                  fill: 'gradient',
-                  data: accelerometerValues,
-      
-                },
-                {
-                  name: 'Gyroscope',
-                  type: 'line',
+                  name: 'Gyro Y',
+                  type: 'column',
                   fill: 'solid',
-                  data: gyroValues,
+                  data: gyroValues[1],
+                },
+                {
+                  name: 'Gyro Z',
+                  type: 'column',
+                  fill: 'solid',
+                  data: gyroValues[2],
                 },
               ]}
             />
