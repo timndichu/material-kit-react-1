@@ -1,7 +1,10 @@
 import { faker } from '@faker-js/faker';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Typography } from '@mui/material';
+import { Grid, Container, Typography, Card, CardHeader, Box } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import moment from 'moment';
+
 // components
 import Page from '../components/Page';
 import Iconify from '../components/Iconify';
@@ -23,6 +26,45 @@ import {
 export default function DashboardApp() {
   const theme = useTheme();
 
+  const [bids, setBids] = useState(['Waiting for connection...']);
+  const [tempValues, setTempValues] = useState([0]);
+  const [gyroValues, setGyroValues] = useState([0]);
+  const [accelerometerValues, setAccelerometerValues] = useState([0]);
+  const currentDate1 = new Date();
+  const showDate1 = moment(currentDate1).format('HH:mm:ss');
+  const [date, setDate] = useState(showDate1.toString());
+
+  useEffect(() => {
+    const ws = new WebSocket('wss://nanosat.herokuapp.com');
+    const currentDate = new Date();
+    const showDate = moment(currentDate).format('HH:mm:ss');
+    ws.onmessage = (event) => {
+      const json = event.data;
+        setDate(showDate.toString())
+         let arr = [];
+      if(json!=="Hello Server") {
+        arr = json.split(',')
+      }
+      if(arr[0]==="T") {
+        setTempValues((prevTemps)=> 
+        prevTemps.concat(arr[1]))
+      }
+      else if(arr[0]==="G") {
+        setGyroValues((prevGyro)=> 
+        prevGyro.concat(arr[1]))
+      }
+      else if(arr[0]==="A") {
+        setAccelerometerValues((prevAcc)=> 
+        prevAcc.concat(arr[1]))
+      }
+      console.log(arr)
+      setBids((prevBids)=> 
+        prevBids.concat(<br/>, json))
+    };
+
+    return () => ws.close();
+  }, []);
+
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">
@@ -31,180 +73,53 @@ export default function DashboardApp() {
         </Typography>
 
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
-          </Grid>
-
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
-              title="Website Visits"
-              subheader="(+43%) than last year"
-              chartLabels={[
-                '01/01/2003',
-                '02/01/2003',
-                '03/01/2003',
-                '04/01/2003',
-                '05/01/2003',
-                '06/01/2003',
-                '07/01/2003',
-                '08/01/2003',
-                '09/01/2003',
-                '10/01/2003',
-                '11/01/2003',
-              ]}
+              title="MPU6050 (Gyroscope + Accelerometer + Temperature) Sensor data"
+              subheader="(+10°C) hotter than last year"
+              date={date}
               chartData={[
                 {
-                  name: 'Team A',
+                  name: 'Temperature',
                   type: 'column',
                   fill: 'solid',
-                  data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
+                  data: tempValues,
                 },
                 {
-                  name: 'Team B',
+                  name: 'Accelerometer',
                   type: 'area',
                   fill: 'gradient',
-                  data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
+                  data: accelerometerValues,
+      
                 },
                 {
-                  name: 'Team C',
+                  name: 'Gyroscope',
                   type: 'line',
                   fill: 'solid',
-                  data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
+                  data: gyroValues,
                 },
-              ]}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentVisits
-              title="Current Visits"
-              chartData={[
-                { label: 'America', value: 4344 },
-                { label: 'Asia', value: 5435 },
-                { label: 'Europe', value: 1443 },
-                { label: 'Africa', value: 4443 },
-              ]}
-              chartColors={[
-                theme.palette.primary.main,
-                theme.palette.chart.blue[0],
-                theme.palette.chart.violet[0],
-                theme.palette.chart.yellow[0],
               ]}
             />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
-            <AppConversionRates
-              title="Conversion Rates"
-              subheader="(+43%) than last year"
-              chartData={[
-                { label: 'Italy', value: 400 },
-                { label: 'Japan', value: 430 },
-                { label: 'China', value: 448 },
-                { label: 'Canada', value: 470 },
-                { label: 'France', value: 540 },
-                { label: 'Germany', value: 580 },
-                { label: 'South Korea', value: 690 },
-                { label: 'Netherlands', value: 1100 },
-                { label: 'United States', value: 1200 },
-                { label: 'United Kingdom', value: 1380 },
-              ]}
-            />
-          </Grid>
+            <Card>
+              <CardHeader title="Websocket Readings" />
 
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentSubject
-              title="Current Subject"
-              chartLabels={['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math']}
-              chartData={[
-                { name: 'Series 1', data: [80, 50, 30, 40, 100, 20] },
-                { name: 'Series 2', data: [20, 30, 40, 80, 20, 80] },
-                { name: 'Series 3', data: [44, 76, 78, 13, 43, 10] },
-              ]}
-              chartColors={[...Array(6)].map(() => theme.palette.text.secondary)}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AppNewsUpdate
-              title="News Update"
-              list={[...Array(5)].map((_, index) => ({
-                id: faker.datatype.uuid(),
-                title: faker.name.jobTitle(),
-                description: faker.name.jobTitle(),
-                image: `/static/mock-images/covers/cover_${index + 1}.jpg`,
-                postedAt: faker.date.recent(),
-              }))}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppOrderTimeline
-              title="Order Timeline"
-              list={[...Array(5)].map((_, index) => ({
-                id: faker.datatype.uuid(),
-                title: [
-                  '1983, orders, $4220',
-                  '12 Invoices have been paid',
-                  'Order #37745 from September',
-                  'New order placed #XF-2356',
-                  'New order placed #XF-2346',
-                ][index],
-                type: `order${index + 1}`,
-                time: faker.date.past(),
-              }))}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppTrafficBySite
-              title="Traffic by Site"
-              list={[
-                {
-                  name: 'FaceBook',
-                  value: 323234,
-                  icon: <Iconify icon={'eva:facebook-fill'} color="#1877F2" width={32} height={32} />,
-                },
-                {
-                  name: 'Google',
-                  value: 341212,
-                  icon: <Iconify icon={'eva:google-fill'} color="#DF3E30" width={32} height={32} />,
-                },
-                {
-                  name: 'Linkedin',
-                  value: 411213,
-                  icon: <Iconify icon={'eva:linkedin-fill'} color="#006097" width={32} height={32} />,
-                },
-                {
-                  name: 'Twitter',
-                  value: 443232,
-                  icon: <Iconify icon={'eva:twitter-fill'} color="#1C9CEA" width={32} height={32} />,
-                },
-              ]}
-            />
+              <Box sx={{ p: 3, pb: 1 }} dir="ltr">
+                {bids}
+              </Box>
+            </Card>
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
             <AppTasks
               title="Tasks"
               list={[
-                { id: '1', label: 'Create FireStone Logo' },
-                { id: '2', label: 'Add SCSS and JS files if required' },
-                { id: '3', label: 'Stakeholder Meeting' },
-                { id: '4', label: 'Scoping & Estimations' },
-                { id: '5', label: 'Sprint Showcase' },
+                { id: '1', label: 'Upload satellite data' },
+                { id: '2', label: 'Record temperature readings' },
+                { id: '3', label: 'Compare gyro values' },
+                { id: '4', label: 'Transmit new commands' },
               ]}
             />
           </Grid>
