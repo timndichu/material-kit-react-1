@@ -19,23 +19,23 @@ const navConfig = [
   {
     title: 'temperature',
     path: '/dashboard/temperature',
-    icon: getIcon('eva:file-text-fill'),
+    icon: getIcon('carbon:temperature-celsius'),
   },
   {
     title: 'accelerometer',
     path: '/dashboard/accelerometer',
-    icon: getIcon('eva:file-text-fill'),
+    icon: getIcon('fluent:gauge-20-regular'),
   },
 
   {
     title: 'gyroscope',
-    path: '/gyroscope',
-    icon: getIcon('eva:file-text-fill'),
+    path: '/dashboard/gyroscope',
+    icon: getIcon('icon-park:one-third-rotation'),
   },
   {
     title: 'optical images',
-    path: '/register',
-    icon: getIcon('eva:file-text-fill'),
+    path: '/404',
+    icon: getIcon('akar-icons:camera'),
   },
   // {
   //   title: 'Not found',

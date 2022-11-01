@@ -21,7 +21,9 @@ export default function Gyroscope() {
 
   const [bids, setBids] = useState(['Waiting for connection...']);
  
-  const [gyroValues, setGyroValues] = useState([0]);
+  const [gyroscopeX, setgyroX] = useState([0]);
+  const [gyroscopeY, setgyroY] = useState([0]);
+  const [gyroscopeZ, setgyroZ] = useState([0]);
   const currentDate1 = new Date();
   const showDate1 = moment(currentDate1).format('HH:mm:ss');
   const [date, setDate] = useState(showDate1.toString());
@@ -39,8 +41,13 @@ export default function Gyroscope() {
       }
      
      if(arr[0]==="G") {
-        setGyroValues((prevGyro)=> 
-        prevGyro.concat(arr[1], arr[2], arr[3]))
+        
+        setgyroX((prevGyro)=> 
+        prevGyro.concat(arr[1]))
+        setgyroY((prevGyro)=> 
+        prevGyro.concat(arr[2]))
+        setgyroZ((prevGyro)=> 
+        prevGyro.concat(arr[3]))
       }
      
       console.log(arr)
@@ -60,29 +67,34 @@ export default function Gyroscope() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={8}>
-            <Chart
-              title="MPU6050 (Gyroscope + Accelerometer + Temperature) Sensor data"
-              subheader="(+10°C) hotter than last year"
+          <Chart
+              title="MPU6050 Gyroscope Sensor data"
+              subheader="Gyroscope readings from the MPU6050 Sensor"
               date={date}
               chartData={[
+               
                 {
-                  name: 'Gyro X',
-                  type: 'column',
-                  fill: 'solid',
-                  data: gyroValues[0],
+                  name: 'X axis',
+                  type: 'area',
+                  fill: 'gradient',
+                  data: gyroscopeX,
+      
                 },
                 {
-                  name: 'Gyro Y',
-                  type: 'column',
-                  fill: 'solid',
-                  data: gyroValues[1],
+                  name: 'Y axis',
+                  type: 'area',
+                  fill: 'gradient',
+                  data: gyroscopeY,
+      
                 },
                 {
-                  name: 'Gyro Z',
-                  type: 'column',
-                  fill: 'solid',
-                  data: gyroValues[2],
+                  name: 'Z axis',
+                  type: 'area',
+                  fill: 'gradient',
+                  data: gyroscopeZ,
+      
                 },
+               
               ]}
             />
           </Grid>

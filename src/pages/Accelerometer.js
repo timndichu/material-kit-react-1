@@ -22,7 +22,9 @@ export default function Accelerometer() {
   
 
   const [bids, setBids] = useState(['Waiting for connection...']);
-  const [accelerometerValues, setAccelerometerValues] = useState([0]);
+  const [accelerometerX, setaccelerometerX] = useState([0]);
+  const [accelerometerY, setaccelerometerY] = useState([0]);
+  const [accelerometerZ, setaccelerometerZ] = useState([0]);
   const currentDate1 = new Date();
   const showDate1 = moment(currentDate1).format('HH:mm:ss');
   const [date, setDate] = useState(showDate1.toString());
@@ -40,8 +42,12 @@ export default function Accelerometer() {
       }
      
      if(arr[0]==="A") {
-        setAccelerometerValues((prevAcc)=> 
-        prevAcc.concat(arr[1],arr[2],arr[3]))
+        setaccelerometerX((prevAcc)=> 
+        prevAcc.concat(arr[1]))
+        setaccelerometerY((prevAcc)=> 
+        prevAcc.concat(arr[2]))
+        setaccelerometerZ((prevAcc)=> 
+        prevAcc.concat(arr[3]))
       }
       console.log(arr)
       setBids((prevBids)=> 
@@ -61,30 +67,30 @@ export default function Accelerometer() {
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={8}>
             <Chart
-              title="MPU6050 (Gyroscope + Accelerometer + Temperature) Sensor data"
-              subheader="(+10°C) hotter than last year"
+              title="MPU6050 Accelerometer Sensor data"
+              subheader="Accelerometer readings from the MPU6050 Sensor"
               date={date}
               chartData={[
                
                 {
-                  name: 'Accelerometer',
+                  name: 'X axis',
                   type: 'area',
                   fill: 'gradient',
-                  data: accelerometerValues[0],
+                  data: accelerometerX,
       
                 },
                 {
-                  name: 'Accelerometer',
+                  name: 'Y axis',
                   type: 'area',
                   fill: 'gradient',
-                  data: accelerometerValues[1],
+                  data: accelerometerY,
       
                 },
                 {
-                  name: 'Accelerometer',
+                  name: 'Z axis',
                   type: 'area',
                   fill: 'gradient',
-                  data: accelerometerValues[2],
+                  data: accelerometerZ,
       
                 },
                
@@ -102,17 +108,7 @@ export default function Accelerometer() {
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
-            <AppTasks
-              title="Tasks"
-              list={[
-                { id: '1', label: 'Upload satellite data' },
-                { id: '2', label: 'Record temperature readings' },
-                { id: '3', label: 'Compare gyro values' },
-                { id: '4', label: 'Transmit new commands' },
-              ]}
-            />
-          </Grid>
+         
         </Grid>
       </Container>
     </Page>
