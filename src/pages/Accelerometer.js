@@ -10,7 +10,7 @@ import Page from '../components/Page';
 
 // sections
 import {
-  AppTasks,
+
  
   Chart,
 
@@ -61,7 +61,7 @@ export default function Accelerometer() {
     <Page title="Dashboard">
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
+          Accelerometer
         </Typography>
 
         <Grid container spacing={3}>

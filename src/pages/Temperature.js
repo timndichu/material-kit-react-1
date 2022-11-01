@@ -7,8 +7,7 @@ import Page from '../components/Page';
 
 // sections
 import {
-  AppTasks,
-  
+ 
   Chart,
 
 } from '../sections/@dashboard/app';
@@ -52,7 +51,7 @@ export default function Temperature() {
     <Page title="Dashboard">
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
+          Temperature
         </Typography>
 
         <Grid container spacing={3}>
@@ -83,17 +82,7 @@ export default function Temperature() {
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
-            <AppTasks
-              title="Tasks"
-              list={[
-                { id: '1', label: 'Upload satellite data' },
-                { id: '2', label: 'Record temperature readings' },
-                { id: '3', label: 'Compare gyro values' },
-                { id: '4', label: 'Transmit new commands' },
-              ]}
-            />
-          </Grid>
+          
         </Grid>
       </Container>
     </Page>
