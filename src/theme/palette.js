@@ -37,6 +37,16 @@ const PRIMARY = {
   contrastText: '#fff',
 };
 
+const SUBMIT = {
+  lighter: '#AFE1AF',
+  light: '#76B0F1',
+  main: '#50C878',
+  dark: '#355E3B',
+  darker: '#228B22',
+  contrastText: '#fff',
+};
+
+
 const SECONDARY = {
   lighter: '#D6E4FF',
   light: '#84A9FF',
@@ -100,6 +110,7 @@ const CHART_COLORS = {
 
 const palette = {
   common: { black: '#000', white: '#fff' },
+  submitButton: {... SUBMIT},
   primary: { ...PRIMARY },
   secondary: { ...SECONDARY },
   info: { ...INFO },

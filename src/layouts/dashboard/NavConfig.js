@@ -33,9 +33,9 @@ const navConfig = [
     icon: getIcon('icon-park:one-third-rotation'),
   },
   {
-    title: 'optical images',
-    path: '/404',
-    icon: getIcon('akar-icons:camera'),
+    title: 'Upload CSV',
+    path: '/dashboard/upload-csv',
+    icon: getIcon('ph:file-csv'),
   },
   // {
   //   title: 'Not found',

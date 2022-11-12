@@ -58,7 +58,7 @@ export default function Accelerometer() {
   }, []);
 
   return (
-    <Page title="Dashboard">
+    <Page title="Dashboard | Accelerometer">
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
           Accelerometer

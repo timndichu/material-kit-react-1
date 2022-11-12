@@ -14,6 +14,7 @@ import DashboardApp from './pages/DashboardApp';
 import Temperature from './pages/Temperature';
 import Gyroscope from './pages/Gyroscope';
 import Accelerometer from './pages/Accelerometer';
+import UploadCSV from './pages/UploadCSV';
 
 
 // ----------------------------------------------------------------------
@@ -31,6 +32,7 @@ export default function Router() {
         { path: 'temperature', element: <Temperature /> },
         { path: 'accelerometer', element: <Accelerometer /> },
         { path: 'gyroscope', element: <Gyroscope /> },
+        { path: 'upload-csv', element: <UploadCSV /> },
       ],
     },
     {

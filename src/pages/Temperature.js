@@ -48,7 +48,7 @@ export default function Temperature() {
   }, []);
 
   return (
-    <Page title="Dashboard">
+    <Page title="Dashboard | Temperature">
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
           Temperature

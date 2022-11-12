@@ -57,7 +57,7 @@ export default function Gyroscope() {
   }, []);
 
   return (
-    <Page title="Dashboard">
+    <Page title="Dashboard | Gyroscope">
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
           Gyroscope
